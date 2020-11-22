@@ -7,7 +7,7 @@ queue_name = queue.method.queue
 channel.queue_bind(
     exchange='order',
     queue=queue_name,
-    routing_key='order.report'  # binding key
+    routing_key='order.notify'  # binding key
 )
 def callback(ch, method, properties, body):
     print(method)
