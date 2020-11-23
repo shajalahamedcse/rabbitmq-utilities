@@ -37,6 +37,10 @@ class PublishToBus(MessageBusBase):
         return _pub_channel
         
     def publish(self, body):
+        """
+        This method takes body as json data then publish this data 
+        to rabbitmq
+        """
         self._declared_exchange.basic_publish(exchange=self._exchange,
                                               routing_key=self._routing_key,
                                               body=body
