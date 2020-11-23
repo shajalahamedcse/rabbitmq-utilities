@@ -26,7 +26,7 @@ class MessageBusBase:
     
 
 class PublishToBus(MessageBusBase):
-    def __init__(self,exchange,exchange_type,routing_key):
+    def __init__(self,exchange,routing_key,exchange_type):
         super(PublishToBus,self).__init__(exchange,routing_key)
         self._declared_exchange = self._exchange_declare_to_publish(exchange_type)
         
@@ -45,6 +45,30 @@ class PublishToBus(MessageBusBase):
                                               routing_key=self._routing_key,
                                               body=body
                                               )
+        
+
+class ConsumeFromBus(MessageBusBase):
+    def __init__(self,exchange,routing_key,queue_name):
+        super(ConsumeFromBus,self).__init__(exchange,routing_key)
+        self._queue_name= queue_name
+        self._queue = self._queue_bind_to_consume()
+        
+        
+    def _queue_bind_to_consume(self):
+        _consume_channel = self._connection.channel()
+        _queue = _consume_channel.queue_declare(self._queue_name)
+        _consume_channel.queue_bind(
+            exchange=self._exchange,
+            queue=self._queue_name,
+            routing_key=self._routing_key
+        )
+        return _consume_channel
+    
+    def consumer(self):
+        return self._queue_bind_to_consume()
+        
+        
+        
         
         
         

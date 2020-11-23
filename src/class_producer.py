@@ -1,6 +1,6 @@
 from rabbitmq_utilities import PublishToBus
 import json
-pb = PublishToBus('order','direct','order.notify')
+pb = PublishToBus('order','order.notify','direct')
 order = {
     'user_email': 'john.doe@example.com',
     'product': 'Leather Jacket',
