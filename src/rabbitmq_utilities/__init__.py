@@ -26,6 +26,8 @@ class MessageBusBase:
     
 
 class PublishToBus(MessageBusBase):
+    # This is pure garbage. Yes I wrote it. And I will clean it up.
+    
     def __init__(self,exchange,routing_key,exchange_type):
         super(PublishToBus,self).__init__(exchange,routing_key)
         self._declared_exchange = self._exchange_declare_to_publish(exchange_type)
